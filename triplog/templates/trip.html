@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Trip</h1>
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ trip.author.username }}</a>
+            <div>
+                <a href="{{ url_for('update_trip', trip_id=trip.id) }}" class="btn btn-secondary btn-sm mt-1 mb-1">Update</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Trip?</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <form action="{{ url_for('delete_trip', trip_id=trip.id) }}" method="POST">
+                                    <input type="submit" class="btn btn-danger" value="Delete">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2 class="article-title">{{ trip.title }}</h2>
+        <p class="article-content">{{ trip.trip_date.strftime('%Y: %a, %b-%d') }}</p>
+        <p class="article-content">{{ trip.difficulty }}</p>
+        <p class="article-content">{{ trip.fun_rating }}</p>
+        <p class="article-content">{{ trip.trip_group }}</p>
+        <p class="article-content">{{ trip.highlights }}</p>
+        <!-- <img class="article-img" src="" alt=""> -->
+    </div>
+</article>
+{% endblock content %}

@@ -1,8 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1>Home Page</h1>
-<p>Trip 1</p>
-<p>Trip 2</p>
-<p>Trip 3</p>
-<p>Trip ...</p>
+<h1>All Trips</h1>
+{% for trip in trips %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ trip.author.username }}</a>
+            <!-- <small class="text-muted">{{ trip.date_posted }}</small> -->
+        </div>
+        <h2><a class="article-title" href="{{ url_for('trip', trip_id=trip.id) }}">{{ trip.title }}</a></h2>
+        <p class="article-content">{{ trip.trip_date.strftime('%Y: %a, %b-%d') }}</p>
+        <p class="article-content">{{ trip.difficulty }}</p>
+        <p class="article-content">{{ trip.fun_rating }}</p>
+        <p class="article-content">{{ trip.trip_group }}</p>
+        <p class="article-content">{{ trip.highlights }}</p>
+        <!-- <img class="article-img" src="" alt=""> -->
+    </div>
+</article>
+{% endfor %}
 {% endblock content %}
