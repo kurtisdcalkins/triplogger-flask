@@ -8,7 +8,7 @@
             <a class="mr-2" href="#">{{ trip.author.username }}</a>
             <!-- <small class="text-muted">{{ trip.date_posted }}</small> -->
         </div>
-        <h2><a class="article-title" href="{{ url_for('trip', trip_id=trip.id) }}">{{ trip.title }}</a></h2>
+        <h2><a class="article-title" href="{{ url_for('trips.trip', trip_id=trip.id) }}">{{ trip.title }}</a></h2>
         <p class="article-content">{{ trip.trip_date.strftime('%Y: %a, %b-%d') }}</p>
         <p class="article-content">{{ trip.difficulty }}</p>
         <p class="article-content">{{ trip.fun_rating }}</p>

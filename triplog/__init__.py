@@ -2,20 +2,31 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_mail import Mail
+from triplog.config import Config
 
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '722d24131ebca2d827a6b6c6ee973b77'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
 login_manager.login_message_cetegory = 'info'
 
-app.app_context().push()
+mail = Mail()
 
 
-from triplog import routes
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    app.app_context().push()
+    db.init_app(app)
+    bcrypt.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
+    from triplog.users.routes import users
+    from triplog.trips.routes import trips
+    from triplog.main.routes import main
+    app.register_blueprint(users)
+    app.register_blueprint(trips)
+    app.register_blueprint(main)
+    return app
